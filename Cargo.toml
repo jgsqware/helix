@@ -5,8 +5,8 @@ members = [
   "helix-view",
   "helix-term",
   "helix-tui",
-  "helix-lsp-types",
   "helix-lsp",
+  "helix-lsp-types",
   "helix-event",
   "helix-dap",
   "helix-loader",
@@ -53,6 +53,7 @@ tokio-stream = "0.1.17"
 toml = "0.9"
 termina = "0.1"
 mimalloc = { version = "0.1.48", features = ["v3"] }
+sonic-rs = "0.5.1"
 
 [workspace.package]
 version = "25.7.1"
