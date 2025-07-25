@@ -1,5 +1,6 @@
 use helix_core::Position;
 
+use helix_view::icons::ICONS;
 use helix_view::theme::Style;
 
 use crate::ui::document::{LinePos, TextRenderer};
@@ -70,6 +71,13 @@ impl Decoration for InlineBlame {
         let amount_of_characters_drawn = renderer
             .column_in_bounds(start_drawing_at as usize, 1)
             .then(|| {
+                let icons = ICONS.load();
+
+                let blame = match icons.vcs().branch() {
+                    Some(icon) if !blame.is_empty() => &format!("{icon} {blame}"),
+                    _ => blame,
+                };
+
                 // the column where we stop drawing the blame
                 let stopped_drawing_at = renderer
                     .set_string_truncated(
