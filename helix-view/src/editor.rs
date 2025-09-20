@@ -427,6 +427,27 @@ pub struct Config {
     pub commands: CustomTypeableCommands,
     /// Inline blame allows showing the latest commit that affected the line the cursor is on as virtual text
     pub inline_blame: InlineBlameConfig,
+    pub buffer_picker: BufferPickerConfig,
+}
+
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize, Clone, Copy)]
+#[serde(rename_all = "kebab-case")]
+pub struct BufferPickerConfig {
+    pub start_position: BufferPickerStartPosition,
+}
+
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize, Clone, Copy)]
+#[serde(rename_all = "kebab-case")]
+pub enum BufferPickerStartPosition {
+    Current,
+    #[default]
+    Previous,
+}
+
+impl BufferPickerStartPosition {
+    pub fn is_previous(self) -> bool {
+        matches!(self, Self::Previous)
+    }
 }
 
 #[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize, Clone, Copy)]
@@ -1091,6 +1112,7 @@ impl Default for Config {
             rainbow_brackets: false,
             kitty_keyboard_protocol: Default::default(),
             commands: CustomTypeableCommands::default(),
+            buffer_picker: BufferPickerConfig::default(),
         }
     }
 }
